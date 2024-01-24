@@ -14,7 +14,9 @@ export default {
     };
   },
   methods: {
-    initiateAudio() {
+    initiateAudio(event) {
+      event.preventDefault(); // Empêche le comportement par défaut du clic ou du toucher
+
       if (!this.initiated) {
         const audioFiles = [
           require('@/assets/audio01.mp3'),
@@ -34,12 +36,15 @@ export default {
           audioPlayer.play()
             .then(() => {
               console.log('Lecture audio démarrée avec succès');
+              // Réinitialisez la variable initiée pour permettre de nouveaux déclenchements
+              this.initiated = false;
             })
             .catch((error) => {
               console.error('Erreur de démarrage de la lecture audio:', error);
             });
         });
 
+        // Mettez à jour le statut initié
         this.initiated = true;
       }
     }
